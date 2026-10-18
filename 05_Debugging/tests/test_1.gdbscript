@@ -1,0 +1,15 @@
+break 64
+commands
+  printf "DEBUG: %ld %ld %ld\n", start, stop, step
+  continue
+end
+
+break 65
+commands
+  if i % 5 == 0
+    printf "DEBUG: %ld\n", i
+  end
+  continue
+end
+
+run 1 12 > /dev/null
