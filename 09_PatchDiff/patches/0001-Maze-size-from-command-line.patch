@@ -1,0 +1,40 @@
+--- a/maze.c
++++ b/maze.c
+@@ -2,10 +2,11 @@
+ #include <stdlib.h>
+ #include <time.h>
+ 
+-#define N 6
+ #define WALL '#'
+ #define PASS '.'
+ 
++int N;
++
+ char **alloc_maze(int n) {
+   char **maze = malloc(n * sizeof(*maze));
+   for (int i = 0; i < n; i++) {
+@@ -107,10 +108,22 @@
+   }
+ }
+ 
+-int main(void) {
+-  int size = N * 2 + 1;
++int main(int argc, char *argv[]) {
++  int size;
+   char **maze;
+ 
++  if (argc < 2) {
++    fprintf(stderr, "Usage: %s <size>\n", argv[0]);
++    return 1;
++  }
++
++  N = atoi(argv[1]);
++  if (N < 1 || N > 64) {
++    fprintf(stderr, "Size must be between 1 and 64\n");
++    return 1;
++  }
++
++  size = N * 2 + 1;
+   srand(time(NULL));
+ 
+   maze = alloc_maze(size);

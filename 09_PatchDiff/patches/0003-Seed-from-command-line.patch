@@ -1,0 +1,40 @@
+--- a/maze.c
++++ b/maze.c
+@@ -112,17 +112,14 @@
+ int main(int argc, char *argv[]) {
+   int size;
+   char **maze;
++  unsigned int seed;
+ 
+-  if (argc < 3) {
+-    fprintf(stderr, "Usage: %s <size> <pass-wall>\n", argv[0]);
++  if (argc < 4) {
++    fprintf(stderr, "Usage: %s <seed> <pass-wall> <size>\n", argv[0]);
+     return 1;
+   }
+ 
+-  N = atoi(argv[1]);
+-  if (N < 1 || N > 64) {
+-    fprintf(stderr, "Size must be between 1 and 64\n");
+-    return 1;
+-  }
++  seed = (unsigned int) strtoul(argv[1], NULL, 10);
+ 
+   if (strlen(argv[2]) != 2) {
+     fprintf(stderr, "Pass-wall must be a 2-char string\n");
+@@ -131,8 +128,14 @@
+   pass_char = argv[2][0];
+   wall_char = argv[2][1];
+ 
++  N = atoi(argv[3]);
++  if (N < 1 || N > 64) {
++    fprintf(stderr, "Size must be between 1 and 64\n");
++    return 1;
++  }
++
+   size = N * 2 + 1;
+-  srand(time(NULL));
++  srand(seed);
+ 
+   maze = alloc_maze(size);
+   init_maze(maze, size);
